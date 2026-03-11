@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         AOS.init({
             duration: 1000,
-            once: true
+            once: true,
+            offset: 100
         });
         console.log('AOS initialized successfully');
     } catch (error) {
@@ -18,11 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     if (themeToggle) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            body.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
-        }
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
 
         themeToggle.addEventListener('click', () => {
             const currentTheme = body.getAttribute('data-theme') || 'light';
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeIcon(newTheme);
+            
+            // Refresh AOS
+            AOS.refresh();
         });
     }
 
@@ -51,10 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 delay: 75,
                 deleteSpeed: 50,
                 cursor: '|',
-                wrapperClassName: 'typewriter-text',
-                onStringTyped: (arrayPos) => {
-                    console.log(`String ${arrayPos} typed`);
-                }
+                wrapperClassName: 'typewriter-text'
             });
             console.log('Typewriter effect initialized successfully');
         } else {
@@ -68,34 +68,76 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectsData = [
         {
             title: 'Smart Retail Analytics',
-            description: 'A dashboard is created to view the sales,inventory and other details in a retail store.',
-            technologies: ['streamlit','Python'],
+            description: 'A dashboard created to view sales, inventory and other details in a retail store.',
+            technologies: ['Streamlit', 'Python', 'Data Analysis'],
             image: 'images/smart-retail.png',
             link: 'https://github.com/Harini4805/Smart_retail_analytics'
         },
         {
+            title: 'PodcastSpark AI',
+            description: 'A system designed to generate podcast ideas based on user preferences.',
+            technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
+            image: 'images/podcast-website.png',
+            link: 'https://harini4805.github.io/podcast-idea-hrk/'
+        },
+        {
             title: 'Simple E-Commerce Platform',
-            description: 'The project is a simple e-commerce platform that allows users to buy the products.',
-            technologies: ['HTML/CSS', 'JavaScript', 'PHP','MySQL'],
+            description: 'A simple e-commerce platform that allows users to browse and purchase products.',
+            technologies: ['HTML','CSS', 'JavaScript', 'PHP', 'MySQL'],
             image: 'images/e-commerce.png',
             link: 'https://github.com/Harini4805/Simple-E-Commerce-Platform'
         },
         {
             title: 'Face Recognition for Smart Attendance',
-            description: 'The project helps the educational institutions to mark attendance of students using face recognition.',
-            technologies: ['TensorFlow', 'Flask', 'OpenCV','SQLite'],
+            description: 'Educational institution attendance system using face recognition technology.',
+            technologies: ['TensorFlow', 'Flask', 'OpenCV', 'SQLite'],
             image: 'images/smart-attendance.jpg',
             link: 'https://github.com/Harini4805/Face_Recognition_For_Smart_Attendance'
-        }
+        },
+        {
+            title: 'Online Course Finder Bot',
+            description: 'A chatbot designed to help students find and enroll in online courses.',
+            technologies: ['HTML','CSS', 'JavaScript', 'Python', 'API Integration'],
+            image: 'images/online-course-finder-bot.png',
+            link: 'https://online-course-finder-bot.vercel.app/'
+        },
+        {
+            title: 'Portfolio Website',
+            description: 'A personal portfolio website to showcase my projects and experience.',
+            technologies: ['HTML', 'CSS', 'JavaScript'],
+            image: 'images/portfolio.png',
+            link: 'https://harini4805.github.io/Harini_portfolio/'
+        },
+        {
+            title: 'Podcast Idea Generator',
+            description: 'A system designed to generate podcast ideas based on user preferences.',
+            technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
+            image: 'images/podcast-idea-generator.png',
+            link: 'https://harini4805.github.io/podcast/'
+        },
+        {
+            title: 'Discipline Management System',
+            description: 'A system designed to manage and track student discipline incidents in educational institutions.',
+            technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
+            image: 'images/discipline-management.png',
+            link: 'https://github.com/Campus-Discipline-Hub'
+        },
+        
     ];
 
     // Experience Data
     const experienceData = [
         {
+            year: '2026',
+            title: 'Full Stack Developer',
+            company: 'Technology Inovation Hub (MKCE)',
+            description: 'Built and maintained scalable full-stack web applications, integrating responsive frontend designs with robust backend functionality.'
+        },
+        {
             year: '2025',
             title: 'Full Stack Developer',
             company: 'Micro IT',
-            description: 'Developed and maintained full-stack web applications, ensuring seamless integration of frontend interfaces and backend logic.'
+            description: 'Developing and maintaining full-stack web applications, ensuring seamless integration of frontend interfaces and backend logic.'
         },
         {
             year: '2024',
@@ -109,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function initProjects() {
         console.log('Initializing projects...');
         const projectsGrid = document.querySelector('.projects-grid');
-        console.log('Projects grid element:', projectsGrid);
         
         if (!projectsGrid) {
             console.error('Projects grid not found!');
@@ -121,15 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add projects to the grid
         projectsData.forEach((project, index) => {
-            console.log(`Creating project card ${index + 1}:`, project.title);
-            
             const projectCard = document.createElement('div');
             projectCard.className = 'project-card';
             projectCard.setAttribute('data-aos', 'fade-up');
+            projectCard.setAttribute('data-aos-delay', `${index * 100}`);
             
-            const projectHTML = `
+            projectCard.innerHTML = `
                 <div class="project-image">
-                    <img src="${project.image}" alt="${project.title}" loading="lazy">
+                    <img src="${project.image}" alt="${project.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x225?text=${encodeURIComponent(project.title)}'">
                 </div>
                 <div class="project-content">
                     <h3>${project.title}</h3>
@@ -137,14 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="project-tech">
                         ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                     </div>
-                    <a href="${project.link}" class="project-link">View Project</a>
+                    <a href="${project.link}" class="project-link" target="_blank" rel="noopener noreferrer">View Project</a>
                 </div>
             `;
             
-            projectCard.innerHTML = projectHTML;
             projectsGrid.appendChild(projectCard);
-            
-            console.log(`Project card ${index + 1} created and added to grid`);
         });
 
         console.log('Projects initialization completed');
@@ -154,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function initExperience() {
         console.log('Initializing experience...');
         const timeline = document.querySelector('.timeline');
-        console.log('Timeline element:', timeline);
         
         if (!timeline) {
             console.error('Timeline not found!');
@@ -165,10 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timeline.innerHTML = '';
 
         experienceData.forEach((exp, index) => {
-            console.log(`Creating timeline item ${index + 1}:`, exp.title);
             const timelineItem = document.createElement('div');
             timelineItem.className = 'timeline-item';
             timelineItem.setAttribute('data-aos', 'fade-up');
+            timelineItem.setAttribute('data-aos-delay', `${index * 100}`);
             
             timelineItem.innerHTML = `
                 <div class="timeline-year">${exp.year}</div>
@@ -185,96 +221,106 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Experience initialization completed');
     }
 
-    // Initialize EmailJS
-    emailjs.init("43w93KIHSuAwPDZYr");
-
-    // Contact Form
+    // Initialize EmailJS (if form exists)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        try {
+            emailjs.init("43w93KIHSuAwPDZYr");
             
-            // Show loading state
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            try {
-                // Get form values
-                const nameInput = contactForm.querySelector('input[type="text"]');
-                const emailInput = contactForm.querySelector('input[type="email"]');
-                const messageInput = contactForm.querySelector('textarea');
+                const submitBtn = contactForm.querySelector('.submit-btn');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
 
-                console.log('Form inputs:', {
-                    name: nameInput.value,
-                    email: emailInput.value,
-                    message: messageInput.value
-                });
+                // Remove any existing messages
+                contactForm.querySelectorAll('.success-message, .error-message').forEach(el => el.remove());
 
-                const formData = {
-                    user_name: nameInput.value,     // User's name
-                    user_email: emailInput.value,   // User's email
-                    message: messageInput.value     // User's message
-                };
+                try {
+                    const formData = {
+                        user_name: contactForm.querySelector('input[name="user_name"]').value.trim(),
+                        user_email: contactForm.querySelector('input[name="user_email"]').value.trim(),
+                        message: contactForm.querySelector('textarea[name="message"]').value.trim()
+                    };
 
-                console.log('Sending email with data:', formData);
+                    const response = await emailjs.send(
+                        "service_j8790ql",
+                        "template_vqz3l6s",
+                        formData
+                    );
 
-                // Send email using EmailJS
-                const response = await emailjs.send(
-                    "service_j8790ql",
-                    "template_vqz3l6s",
-                    formData
-                );
+                    console.log('Email sent successfully:', response);
 
-                console.log('Email sent successfully:', response);
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.innerHTML = '✅ Message sent successfully! I\'ll get back to you soon.';
+                    contactForm.appendChild(successMessage);
 
-                // Show success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.textContent = 'Message sent successfully!';
-                contactForm.appendChild(successMessage);
+                    contactForm.reset();
+                    setTimeout(() => successMessage.remove(), 4000);
 
-                // Remove success message after 3 seconds
-                setTimeout(() => {
-                    successMessage.remove();
-                }, 3000);
+                } catch (error) {
+                    console.error('EmailJS error:', error);
 
-                // Reset form
-                contactForm.reset();
-            } catch (error) {
-                console.error('Error sending message:', error);
-                console.error('Error details:', {
-                    message: error.message,
-                    text: error.text,
-                    status: error.status
-                });
-                
-                // Show error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'error-message';
-                errorMessage.textContent = `Failed to send message: ${error.message || 'Please try again.'}`;
-                contactForm.appendChild(errorMessage);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'error-message';
+                    errorMessage.innerHTML = '❌ Failed to send. Please email directly: <a href="mailto:harinixid@gmail.com">harinixid@gmail.com</a>';
+                    contactForm.appendChild(errorMessage);
 
-                // Remove error message after 3 seconds
-                setTimeout(() => {
-                    errorMessage.remove();
-                }, 3000);
-            } finally {
-                // Reset button state
-                submitBtn.textContent = originalBtnText;
-                submitBtn.disabled = false;
-            }
-        });
+                    setTimeout(() => errorMessage.remove(), 5000);
+                } finally {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            });
+        } catch (error) {
+            console.error('Error initializing EmailJS:', error);
+        }
     }
 
     // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const target = document.querySelector(targetId);
             if (target) {
                 e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
+                target.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            }
+        });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
             }
         });
     });
@@ -285,4 +331,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initExperience();
     console.log('All sections initialized');
 });
-  
