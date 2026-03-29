@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const typewriterElement = document.querySelector('.typewriter');
         if (typewriterElement && window.Typewriter) {
             new Typewriter(typewriterElement, {
-                strings: ['Harini R K', 'ML Engineer', 'Full Stack Developer'],
+                strings: ['Harini R K', 'Web Designer', 'Full Stack Developer'],
                 autoStart: true,
                 loop: true,
                 delay: 75,
