@@ -73,13 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
             image: 'images/smart-retail.png',
             link: 'https://github.com/Harini4805/Smart_retail_analytics'
         },
-        {
-            title: 'PodcastSpark AI',
-            description: 'A system designed to generate podcast ideas based on user preferences.',
-            technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
-            image: 'images/podcast-website.png',
-            link: 'https://harini4805.github.io/podcast-idea-hrk/'
-        },
+        // {
+        //     title: 'PodcastSpark AI',
+        //     description: 'A system designed to generate podcast ideas based on user preferences.',
+        //     technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
+        //     image: 'images/podcast-website.png',
+        //     link: 'https://harini4805.github.io/podcast-idea-hrk/'
+        // },
         {
             title: 'Simple E-Commerce Platform',
             description: 'A simple e-commerce platform that allows users to browse and purchase products.',
@@ -108,13 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
             image: 'images/portfolio.png',
             link: 'https://harini4805.github.io/Harini_portfolio/'
         },
-        {
-            title: 'Podcast Idea Generator',
-            description: 'A system designed to generate podcast ideas based on user preferences.',
-            technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
-            image: 'images/podcast-idea-generator.png',
-            link: 'https://harini4805.github.io/podcast/'
-        },
+        // {
+        //     title: 'Podcast Idea Generator',
+        //     description: 'A system designed to generate podcast ideas based on user preferences.',
+        //     technologies: ['HTML', 'CSS', 'JavaScript','API Integration'],
+        //     image: 'images/podcast-idea-generator.png',
+        //     link: 'https://harini4805.github.io/podcast/'
+        // },
         {
             title: 'Discipline Management System',
             description: 'A system designed to manage and track student discipline incidents in educational institutions.',
